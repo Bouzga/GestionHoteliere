@@ -1,7 +1,7 @@
 package com.example.gestionhoteliere.repository;
 
-import com.example.gestionhoteliere.entities.Room;
+import com.example.gestionhoteliere.entities.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface RoomRepository extends MongoRepository<Room, Long> {
+public interface UserRepository extends MongoRepository<User,Long> {
 }
