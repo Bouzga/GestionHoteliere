@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Room {
     @Id
-    private Long id_room;
+    private String id_room;
     private String name;
     private String capacity;
     private double price;
