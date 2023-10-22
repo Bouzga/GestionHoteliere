@@ -1,13 +1,10 @@
-package com.example.gestionhoteliere.controller;
+package com.example.gestionhoteliere.controllers;
 
-import com.example.gestionhoteliere.entities.Room;
-import com.example.gestionhoteliere.repository.RoomRepository;
+import com.example.gestionhoteliere.models.Room;
+import com.example.gestionhoteliere.repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

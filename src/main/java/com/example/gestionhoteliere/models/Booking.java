@@ -1,5 +1,6 @@
-package com.example.gestionhoteliere.entities;
+package com.example.gestionhoteliere.models;
 
+import com.example.gestionhoteliere.models.Room;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

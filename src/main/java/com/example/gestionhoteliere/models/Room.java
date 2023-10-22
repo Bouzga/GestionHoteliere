@@ -1,4 +1,4 @@
-package com.example.gestionhoteliere.entities;
+package com.example.gestionhoteliere.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
