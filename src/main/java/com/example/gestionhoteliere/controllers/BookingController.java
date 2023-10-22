@@ -1,9 +1,7 @@
-package com.example.gestionhoteliere.controller;
+package com.example.gestionhoteliere.controllers;
 
-import com.example.gestionhoteliere.entities.Booking;
-import com.example.gestionhoteliere.entities.User;
-import com.example.gestionhoteliere.repository.BookingRepository;
-import com.example.gestionhoteliere.repository.UserRepository;
+import com.example.gestionhoteliere.models.Booking;
+import com.example.gestionhoteliere.repositories.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
