@@ -1,6 +1,7 @@
 package com.example.gestionhoteliere.controllers;
 
 
+import com.example.gestionhoteliere.models.ERole;
 import com.example.gestionhoteliere.models.Role;
 import com.example.gestionhoteliere.models.User;
 import com.example.gestionhoteliere.repositories.UserRepository;
@@ -24,14 +25,14 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 
-@RequestMapping("/api/user")
+@RequestMapping("/api")
 public class UserController {
     @Autowired
     UserRepository userRepository;
 
     @GetMapping("/users")
-    public ResponseEntity<?> getAllAdmins() {
-        List<User> admins = new ArrayList<User>();
+    public ResponseEntity<?> getAllUsers() {
+        List<User> Users = new ArrayList<User>();
 
 
         var users = userRepository.findAll();
@@ -39,13 +40,49 @@ public class UserController {
 
                 for (User user : users) {
                    for(Role role:user.getRoles()){
-                       if(role.getName().equals("ROLE_USER")) admins.add(user);
+                       if(role.getName() == ERole.ROLE_USER) Users.add(user);
                    }
 
                 }
 
 
+        return ResponseEntity.ok(Users);
+    }
+    @GetMapping("/admins")
+    public ResponseEntity<?> getAllAdmins() {
+        List<User> admins = new ArrayList<User>();
+
+
+        var users = userRepository.findAll();
+
+
+        for (User user : users) {
+            for(Role role:user.getRoles()){
+                if(role.getName() == ERole.ROLE_ADMIN) admins.add(user);
+            }
+
+        }
+
+
         return ResponseEntity.ok(admins);
+    }
+    @GetMapping("/mods")
+    public ResponseEntity<?> getAllMods() {
+        List<User> mods = new ArrayList<User>();
+
+
+        var users = userRepository.findAll();
+
+
+        for (User user : users) {
+            for(Role role:user.getRoles()){
+                if(role.getName() == ERole.ROLE_MODERATOR) mods.add(user);
+            }
+
+        }
+
+
+        return ResponseEntity.ok(mods);
     }
     @GetMapping("/all")
     public ResponseEntity<?> getAll() {
