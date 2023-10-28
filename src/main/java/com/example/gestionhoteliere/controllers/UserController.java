@@ -103,30 +103,27 @@ public class UserController {
     return ResponseEntity.ok("User deleted successfully");
 }
 
-//    @PutMapping("/updateUser/{username}")
-//    public ResponseEntity<?> update(@PathVariable String username, @RequestBody User updatedUser) {
-//        Optional<User> existingUserOptional = userRepository.findByUsername(username);
-//
-//        if (existingUserOptional.isPresent()) {
-//            User existingUser = existingUserOptional.get();
-//
-//            // Update the existing user with new data
-//            existingUser.setEmail(updatedUser.getEmail());
-//            existingUser.setUsername(updatedUser.getUsername());
-//            private boolean hasAdminRole(User user) {
-//                // Fetch the "admin" role from the database
-//                Role adminRole = userRepository.findByRoles("ROLE_ADMIN");
-//
-//
-//                // Save the updated user
-//                userRepository.save(existingUser);
-//
-//                return ResponseEntity.ok(existingUser);
-//            } else {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-//            }
-//            // Check if the user's roles include the admin role
-//            return user.getRoles().contains(adminRole);
-//        }
+    @PutMapping("/updateUser/{username}")
+    public ResponseEntity<?> update(@PathVariable String username, @RequestBody User updatedUser) {
+        Optional<User> existingUserOptional = userRepository.findByUsername(username);
+
+        if (existingUserOptional.isPresent()) {
+            User existingUser = existingUserOptional.get();
+
+
+            existingUser.setEmail(updatedUser.getEmail());
+            existingUser.setUsername(updatedUser.getUsername());
+
+
+
+                userRepository.save(existingUser);
+
+                return ResponseEntity.ok(existingUser);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+        
+
+        }
 
             }
