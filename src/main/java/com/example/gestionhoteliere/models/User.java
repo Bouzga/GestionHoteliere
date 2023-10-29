@@ -2,6 +2,7 @@ package com.example.gestionhoteliere.models;
 
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.validation.constraints.Email;
@@ -33,7 +34,8 @@ public class User {
 
     @DBRef
     private Set<Role> roles = new HashSet<>();
-
+    @DBRef
+    private List<Booking> bookings;
     public User() {
     }
 

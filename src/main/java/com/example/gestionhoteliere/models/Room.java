@@ -11,10 +11,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document
+@Document(collection = "room")
 public class Room {
     @Id
-    private String id_room;
+    private String id;
     private String name;
     private String capacity;
     private double price;
