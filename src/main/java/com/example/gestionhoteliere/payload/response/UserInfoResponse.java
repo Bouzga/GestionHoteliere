@@ -10,15 +10,26 @@ public class UserInfoResponse {
 	private String type = "Bearer";
 	private String id;
 	private String username;
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	private String firstName;
 	private String email;
 	private List<String> roles;
 
-	public UserInfoResponse(String accessToken, String id, String username, String email, List<String> roles) {
+	public UserInfoResponse(String accessToken, String id, String username, String email,String firstName, List<String> roles) {
 		this.token = accessToken;
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.roles = roles;
+		this.firstName = firstName;
 	}
 	public String getAccessToken() {
 		return token;

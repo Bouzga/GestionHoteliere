@@ -4,11 +4,14 @@ package com.example.gestionhoteliere.controllers;
 import com.example.gestionhoteliere.models.ERole;
 import com.example.gestionhoteliere.models.Role;
 import com.example.gestionhoteliere.models.User;
+import com.example.gestionhoteliere.payload.request.UpdateUserRequest;
 import com.example.gestionhoteliere.repositories.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -104,15 +107,17 @@ public class UserController {
 }
 
     @PutMapping("/updateUser/{username}")
-    public ResponseEntity<?> update(@PathVariable String username, @RequestBody User updatedUser) {
-        Optional<User> existingUserOptional = userRepository.findByUsername(username);
+    public ResponseEntity<?> update(@RequestBody UpdateUserRequest userRequest) {
+        UserDetails userDetails =
+                (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<User> currentUser =userRepository.findByUsername(userDetails.getUsername());
 
-        if (existingUserOptional.isPresent()) {
-            User existingUser = existingUserOptional.get();
+        if (currentUser.isPresent()) {
+            User existingUser = currentUser.get();
 
 
-            existingUser.setEmail(updatedUser.getEmail());
-            existingUser.setUsername(updatedUser.getUsername());
+            existingUser.setEmail(existingUser.getEmail());
+
 
 
 

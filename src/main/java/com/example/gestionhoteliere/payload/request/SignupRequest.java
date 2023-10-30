@@ -1,5 +1,6 @@
 package com.example.gestionhoteliere.payload.request;
 
+import com.example.gestionhoteliere.models.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import java.util.Set;
  
 public class SignupRequest {
+    public String firstName;
     @NotBlank
     @Size(min = 3, max = 20)
     private String username;

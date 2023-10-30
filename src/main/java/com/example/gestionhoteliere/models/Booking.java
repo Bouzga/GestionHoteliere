@@ -24,6 +24,6 @@ public class Booking {
     @DBRef
     private User user;
 
-    @DBRef
+//    @DBRef
     private Room room ;
 }

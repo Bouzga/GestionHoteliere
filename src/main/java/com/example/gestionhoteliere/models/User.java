@@ -15,12 +15,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "users")
 public class User {
+
     @Id
     private String id;
 
     @NotBlank
     @Size(max = 20)
     private String username;
+
+    @NotBlank
+    @Size(max = 20)
+    private String firstName;
 
     @NotBlank
     @Size(max = 50)
@@ -39,16 +44,18 @@ public class User {
     public User() {
     }
 
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password,String firstName) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.firstName=firstName;
     }
-    public User(String username, String email, String password,Set<Role> roles) {
+    public User(String username, String email, String password,Set<Role> roles,String firstName) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.roles=roles;
+        this.firstName=firstName;
     }
     public String getId() {
         return id;
@@ -65,7 +72,13 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
+    public String getFirstName() {
+        return firstName;
+    }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
     public String getEmail() {
         return email;
     }

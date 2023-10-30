@@ -1,18 +1,31 @@
 package com.example.gestionhoteliere.controllers;
 
+import com.example.gestionhoteliere.models.Booking;
+import com.example.gestionhoteliere.models.Range;
 import com.example.gestionhoteliere.models.Room;
+import com.example.gestionhoteliere.payload.request.SearchRoomRequest;
+import com.example.gestionhoteliere.repositories.BookingRepository;
 import com.example.gestionhoteliere.repositories.RoomRepository;
+import com.example.gestionhoteliere.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/rooms")
 public class RoomController {
     @Autowired
     private RoomRepository roomRepository;
+    @Autowired
+    private RoomService roomService;
+    @Autowired
+    private BookingRepository bookingRepository;
+
 
     // Endpoint pour ajouter une nouvelle chambre
     @PostMapping("/add")
@@ -20,7 +33,7 @@ public class RoomController {
         return roomRepository.save(room);
     }
 
-     //Endpoint pour récupérer toutes les chambres
+    //Endpoint pour récupérer toutes les chambres
     @GetMapping("/all")
     public List<Room> getAllRooms() {
         return roomRepository.findAll();
@@ -55,5 +68,24 @@ public class RoomController {
         }
     }
 
+    @PostMapping("/search")
+    public ResponseEntity<?> SearchRoom(@RequestBody SearchRoomRequest searchRoomRequest) {
+        var availableRooms = new ArrayList<Room>();
+        Range range = new Range(searchRoomRequest.getStartDate(), searchRoomRequest.getEndDate());
 
+        List<Room> rooms = roomRepository.findAll();
+        for (Room room : rooms) {
+            var bookings = bookingRepository.findByRoomId(room.getId());
+            List<Range> dateRanges = bookings.stream()
+                    .map(booking -> new Range(booking.getStartDate(), booking.getEndDate()))
+                    .collect(Collectors.toList());
+            var overlap = range.overlapsWith(dateRanges);
+            if (!overlap) availableRooms.add(room);
+
+
+        }
+
+
+        return ResponseEntity.ok(availableRooms);
+    }
 }

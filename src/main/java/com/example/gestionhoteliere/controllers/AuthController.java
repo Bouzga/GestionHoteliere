@@ -62,11 +62,12 @@ public class AuthController {
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
-
+        var user = userRepository.findByUsername(userDetails.getUsername()).get();
         return ResponseEntity.ok(new UserInfoResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
+                user.getFirstName(),
                 roles));
     }
     @GetMapping("/all")
@@ -90,7 +91,7 @@ public class AuthController {
         // Create new user's account
         User user = new User(signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
+                encoder.encode(signUpRequest.getPassword()),signUpRequest.firstName);
 
         Set<String> strRoles = signUpRequest.getRoles();
         Set<Role> roles = new HashSet<>();
@@ -141,6 +142,7 @@ public class AuthController {
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
+                user.getFirstName(),
                 rolesDiff));
     }
 }
