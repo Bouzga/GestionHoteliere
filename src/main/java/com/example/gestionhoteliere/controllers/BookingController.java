@@ -2,6 +2,7 @@ package com.example.gestionhoteliere.controllers;
 
 import com.example.gestionhoteliere.models.Booking;
 import com.example.gestionhoteliere.models.Range;
+import com.example.gestionhoteliere.models.User;
 import com.example.gestionhoteliere.payload.request.BookingRequest;
 import com.example.gestionhoteliere.repositories.BookingRepository;
 import com.example.gestionhoteliere.repositories.RoomRepository;
@@ -92,6 +93,17 @@ public class BookingController {
         if (existingBooking != null) {
             bookingRepository.delete(existingBooking);
         }
+    }
+    @GetMapping("/allBookings")
+    public  List<Booking> getBookingByUser(){
+        UserDetails userDetails =
+                (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        User user=userRepository.findByUsername(userDetails.getUsername()).get();
+
+        return bookingRepository.findBookingByUser(user);
+
+
     }
 
 }

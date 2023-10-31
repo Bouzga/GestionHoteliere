@@ -20,5 +20,10 @@ public class UserRequest {
     private String email;
     private String password;
     private String firstName;
+    private String lastName;
+
+    private int age;
+
+    private String phone;
     private Set<Role> roles = new HashSet<>();
 }

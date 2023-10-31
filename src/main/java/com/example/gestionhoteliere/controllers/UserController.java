@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class UserController {
     @Autowired
     UserRepository userRepository;
@@ -106,7 +106,7 @@ public class UserController {
     return ResponseEntity.ok("User deleted successfully");
 }
 
-    @PutMapping("/updateUser/{username}")
+    @PutMapping("/updateUser")
     public ResponseEntity<?> update(@RequestBody UpdateUserRequest userRequest) {
         UserDetails userDetails =
                 (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -114,9 +114,21 @@ public class UserController {
 
         if (currentUser.isPresent()) {
             User existingUser = currentUser.get();
+            if(userRequest.getEmail()==null) existingUser.setEmail(existingUser.getEmail());
+            else existingUser.setEmail(userRequest.getEmail());
 
+            if(userRequest.getFirstName()==null) existingUser.setFirstName(existingUser.getFirstName());
+            else existingUser.setFirstName(userRequest.getFirstName());
 
-            existingUser.setEmail(existingUser.getEmail());
+            if(userRequest.getLastName()==null) existingUser.setLastName(existingUser.getLastName());
+            else existingUser.setLastName(userRequest.getLastName());
+
+            if(userRequest.getAge()==0) existingUser.setAge(existingUser.getAge());
+            else existingUser.setAge(userRequest.getAge());
+
+            if(userRequest.getPhone()==null) existingUser.setPhone(existingUser.getPhone());
+            else existingUser.setPhone(userRequest.getPhone());
+
 
 
 

@@ -4,15 +4,22 @@ import com.example.gestionhoteliere.models.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Set;
- 
+ @Getter
+ @Setter
 public class SignupRequest {
-    public String firstName;
+    private String firstName;
     @NotBlank
     @Size(min = 3, max = 20)
     private String username;
- 
+    private String lastName;
+
+    private int age;
+
+    private String phone;
     @NotBlank
     @Size(max = 50)
     @Email
