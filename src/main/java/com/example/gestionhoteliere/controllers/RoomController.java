@@ -71,8 +71,8 @@ public class RoomController {
     @PostMapping("/search")
     public ResponseEntity<?> SearchRoom(@RequestBody SearchRoomRequest searchRoomRequest) {
         var availableRooms = new ArrayList<Room>();
-        Range range = new Range(searchRoomRequest.getStartDate(), searchRoomRequest.getEndDate());
 
+        Range range = new Range(searchRoomRequest.getStartDate(), searchRoomRequest.getEndDate());
         List<Room> rooms = roomRepository.findAll();
         for (Room room : rooms) {
             var bookings = bookingRepository.findByRoomId(room.getId());
@@ -85,7 +85,9 @@ public class RoomController {
 
         }
 
-
-        return ResponseEntity.ok(availableRooms);
+        List<Room> availableRoomsWithCapacity = availableRooms.stream()
+                .filter(room -> room.getCapacity() == searchRoomRequest.getCapacity())
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(availableRoomsWithCapacity);
     }
 }

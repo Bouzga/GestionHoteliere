@@ -14,4 +14,5 @@ import java.util.Date;
 public class SearchRoomRequest {
     private Date startDate;
     private Date endDate;
+    private int capacity;
 }

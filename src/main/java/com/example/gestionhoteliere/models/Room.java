@@ -16,7 +16,7 @@ public class Room {
     @Id
     private String id;
     private String name;
-    private String capacity;
+    private int capacity;
     private double price;
     private double surface;
     private String roomEquipement;
