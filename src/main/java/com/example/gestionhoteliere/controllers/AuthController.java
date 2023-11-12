@@ -1,8 +1,6 @@
 package com.example.gestionhoteliere.controllers;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.example.gestionhoteliere.models.ERole;
@@ -10,6 +8,7 @@ import com.example.gestionhoteliere.models.Role;
 import com.example.gestionhoteliere.models.User;
 import com.example.gestionhoteliere.payload.request.LoginRequest;
 import com.example.gestionhoteliere.payload.request.SignupRequest;
+import com.example.gestionhoteliere.payload.request.UpdateUserRequest;
 import com.example.gestionhoteliere.payload.response.MessageResponse;
 import com.example.gestionhoteliere.payload.response.UserInfoResponse;
 import com.example.gestionhoteliere.repositories.RoleRepository;
@@ -20,12 +19,14 @@ import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -151,4 +152,13 @@ public class AuthController {
                 user.getPhone(),
                 rolesDiff));
     }
+//    @GetMapping("/userInfo")
+//    public ResponseEntity<?> getUserInfo() {
+//        UserDetails userDetails =
+//                (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Optional<User> currentUser =userRepository.findByUsername(userDetails.getUsername());
+//        return ResponseEntity.ok(currentUser.get());
+//
+//    }
+
 }

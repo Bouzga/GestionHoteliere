@@ -25,10 +25,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 
-@RequestMapping("/api/user")
+@RequestMapping("/api/auth/user")
 public class UserController {
     @Autowired
     UserRepository userRepository;
@@ -142,5 +143,13 @@ public class UserController {
 
 
         }
+    @GetMapping("/userInfo")
+    public ResponseEntity<?> getUserInfo() {
+        UserDetails userDetails =
+                (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<User> currentUser =userRepository.findByUsername(userDetails.getUsername());
+        return ResponseEntity.ok(currentUser.get());
+
+    }
 
             }
