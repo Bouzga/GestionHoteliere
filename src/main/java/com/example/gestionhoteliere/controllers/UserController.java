@@ -1,10 +1,12 @@
 package com.example.gestionhoteliere.controllers;
 
 
+import com.example.gestionhoteliere.models.Booking;
 import com.example.gestionhoteliere.models.ERole;
 import com.example.gestionhoteliere.models.Role;
 import com.example.gestionhoteliere.models.User;
 import com.example.gestionhoteliere.payload.request.UpdateUserRequest;
+import com.example.gestionhoteliere.repositories.BookingRepository;
 import com.example.gestionhoteliere.repositories.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,8 @@ import java.util.stream.Collectors;
 public class UserController {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    BookingRepository bookingRepository;
 
     @GetMapping("/users")
     public ResponseEntity<?> getAllUsers() {
@@ -151,5 +155,14 @@ public class UserController {
         return ResponseEntity.ok(currentUser.get());
 
     }
+    @GetMapping("/userDetails/{userName}")
+    public ResponseEntity<?> getUserDetails(@PathVariable String userName) {
+        User user=userRepository.findByUsername(userName).get();
+        var booking=bookingRepository.findBookingByUser(user);
 
-            }
+        return ResponseEntity.ok(booking);
+
+    }
+
+
+}
