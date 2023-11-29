@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api/rooms")
+@RequestMapping("/api/auth/rooms")
 public class RoomController {
     @Autowired
     private RoomRepository roomRepository;
