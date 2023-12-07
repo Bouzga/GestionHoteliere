@@ -47,17 +47,36 @@ public class RoomController {
             // Gérer le cas où la chambre n'existe pas
             return null;
         }
+        if(!(existingRoom.getName().equals(updatedRoom.getName()))){
+            existingRoom.setName(updatedRoom.getName());
 
+        }
+        if(existingRoom.getCapacity()!=updatedRoom.getCapacity()){
+            existingRoom.setCapacity(updatedRoom.getCapacity());
+
+        } if(existingRoom.getPrice()!=updatedRoom.getPrice()){
+            existingRoom.setPrice(updatedRoom.getPrice());
+
+        }if(!(existingRoom.getRoomEquipement().equals(updatedRoom.getRoomEquipement()))){
+            existingRoom.setRoomEquipement(updatedRoom.getRoomEquipement());
+
+        } if(!(existingRoom.getEntertaiment().equals(updatedRoom.getEntertaiment()))){
+            existingRoom.setEntertaiment(updatedRoom.getEntertaiment());
+
+        } if(!(existingRoom.getOther().equals(updatedRoom.getOther()))){
+            existingRoom.setOther(updatedRoom.getOther());
+
+        }
         // Mettre à jour les champs de la chambre existante avec les données de "updatedRoom"
-        existingRoom.setName(updatedRoom.getName());
+
         existingRoom.setCapacity(updatedRoom.getCapacity());
         existingRoom.setPrice(updatedRoom.getPrice());
         existingRoom.setSurface(updatedRoom.getSurface());
         existingRoom.setRoomEquipement(updatedRoom.getRoomEquipement());
         existingRoom.setEntertaiment(updatedRoom.getEntertaiment());
         existingRoom.setOther(updatedRoom.getOther());
-
-        return roomRepository.save(existingRoom);
+        roomRepository.save(existingRoom);
+        return existingRoom ;
     }
 
     @DeleteMapping("/delete/{id}")
