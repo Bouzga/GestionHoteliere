@@ -27,6 +27,7 @@ public class RoomController {
     private BookingRepository bookingRepository;
 
 
+
     // Endpoint pour ajouter une nouvelle chambre
     @PostMapping("/add")
     public Room addRoom(@RequestBody Room room) {
@@ -40,51 +41,50 @@ public class RoomController {
     }
 
 
-    @PutMapping("/update/{id}")
-    public Room updateRoom(@PathVariable String id, @RequestBody Room updatedRoom) {
-        Room existingRoom = roomRepository.findById(id).orElse(null);
+    @PutMapping("/update/{name}")
+    public Room updateRoom(@PathVariable String name, @RequestBody Room updatedRoom) {
+        Room existingRoom = roomRepository.findRoomByName(name);
         if (existingRoom == null) {
             // Gérer le cas où la chambre n'existe pas
             return null;
         }
-        if(!(existingRoom.getName().equals(updatedRoom.getName()))){
+        if(updatedRoom.getName()!=null &&!existingRoom.getName().equals(updatedRoom.getName())){
             existingRoom.setName(updatedRoom.getName());
 
         }
-        if(existingRoom.getCapacity()!=updatedRoom.getCapacity()){
+        if(updatedRoom.getCapacity()!=0 && existingRoom.getCapacity()!=updatedRoom.getCapacity()){
             existingRoom.setCapacity(updatedRoom.getCapacity());
 
-        } if(existingRoom.getPrice()!=updatedRoom.getPrice()){
+        } if(updatedRoom.getPrice()==0&&existingRoom.getPrice()!=updatedRoom.getPrice()){
             existingRoom.setPrice(updatedRoom.getPrice());
+        } if(updatedRoom.getSurface()==0&&existingRoom.getSurface()!=updatedRoom.getSurface()){
+            existingRoom.setPrice(updatedRoom.getCapacity());
 
-        }if(!(existingRoom.getRoomEquipement().equals(updatedRoom.getRoomEquipement()))){
+        }if(updatedRoom.getRoomEquipement()!=null &&!existingRoom.getRoomEquipement().equals(updatedRoom.getRoomEquipement())){
             existingRoom.setRoomEquipement(updatedRoom.getRoomEquipement());
 
-        } if(!(existingRoom.getEntertaiment().equals(updatedRoom.getEntertaiment()))){
+        } if(updatedRoom.getEntertaiment()!=null&&!(existingRoom.getEntertaiment().equals(updatedRoom.getEntertaiment()))){
             existingRoom.setEntertaiment(updatedRoom.getEntertaiment());
 
-        } if(!(existingRoom.getOther().equals(updatedRoom.getOther()))){
+        } if(updatedRoom.getOther()!=null&&!(existingRoom.getOther().equals(updatedRoom.getOther()))){
             existingRoom.setOther(updatedRoom.getOther());
 
         }
         // Mettre à jour les champs de la chambre existante avec les données de "updatedRoom"
 
-        existingRoom.setCapacity(updatedRoom.getCapacity());
-        existingRoom.setPrice(updatedRoom.getPrice());
-        existingRoom.setSurface(updatedRoom.getSurface());
-        existingRoom.setRoomEquipement(updatedRoom.getRoomEquipement());
-        existingRoom.setEntertaiment(updatedRoom.getEntertaiment());
-        existingRoom.setOther(updatedRoom.getOther());
         roomRepository.save(existingRoom);
         return existingRoom ;
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteRoom(@PathVariable String id) {
-        Room existingRoom = roomRepository.findById(id).orElse(null);
+    @DeleteMapping("/delete/{name}")
+    public ResponseEntity<?> deleteRoom(@PathVariable String name) {
+        Room existingRoom = roomRepository.findRoomByName(name);
         if (existingRoom != null) {
             roomRepository.delete(existingRoom);
+            return ResponseEntity.ok("room has been deleted");
+
         }
+       return ResponseEntity.badRequest().body("Error");
     }
 
     @PostMapping("/search")

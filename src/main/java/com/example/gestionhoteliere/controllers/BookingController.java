@@ -3,6 +3,7 @@ package com.example.gestionhoteliere.controllers;
 import com.example.gestionhoteliere.models.Booking;
 import com.example.gestionhoteliere.models.Range;
 import com.example.gestionhoteliere.models.User;
+import com.example.gestionhoteliere.payload.request.BookingPersoRequest;
 import com.example.gestionhoteliere.payload.request.BookingRequest;
 import com.example.gestionhoteliere.repositories.BookingRepository;
 import com.example.gestionhoteliere.repositories.RoomRepository;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import java.util.Date;
@@ -19,7 +22,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/booking")
+@RequestMapping("/api/auth/booking")
 public class BookingController {
     @Autowired
     private BookingRepository bookingRepository;
